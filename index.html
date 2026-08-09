@@ -2445,8 +2445,8 @@
         }
 
         // any anchors that link to #waitlist should also focus/prefill
-        document.querySelectorAll('a[href="#waitlist"]').forEach(a => {
-            // allow default anchor behavior but also focus the email field
+        document.querySelectorAll('a[href="#waitlist"]').forEach((a) => {
+          a.addEventListener('click', () => {
             setTimeout(() => {
               const email = document.querySelector('#waitlistForm [name="email"]');
               if (email) email.focus();
