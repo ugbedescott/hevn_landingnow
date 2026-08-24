@@ -10,6 +10,8 @@ Environment variables (see `.env.example`):
 - `SENDGRID_API_KEY`
 - `SENDGRID_FROM`
 - `WAITLIST_TO` (optional)
+- `SUPABASE_URL` (optional - required if using DB)
+- `SUPABASE_SERVICE_ROLE_KEY` (server-side key - required for serverless upserts)
 
 Create a `.env` file or set these values in your deployment provider. If
 `SENDGRID_API_KEY` is missing the function will return a 500 with a message

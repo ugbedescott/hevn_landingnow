@@ -1,6 +1,17 @@
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// Optional: Supabase client for persistent waitlist storage
+let supabase = null;
+try {
+    const { createClient } = require('@supabase/supabase-js');
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+    }
+} catch (e) {
+    console.warn('Supabase client not available', e && e.message);
+}
+
 exports.handler = async (event, context) => {
     try {
         const CORS_HEADERS = {
@@ -27,6 +38,20 @@ exports.handler = async (event, context) => {
         const { name, email, role, source } = data || {};
         if (!email) {
             return { statusCode: 400, body: JSON.stringify({ error: 'Missing email' }) };
+        }
+
+        // persist to Supabase waitlist (if configured)
+        if (supabase) {
+            try {
+                const payload = { email: String(email).toLowerCase(), name: name || null, role: role || null, source: source || null };
+                const { data: dbData, error: dbErr } = await supabase
+                    .from('waitlist')
+                    .upsert([payload], { onConflict: 'email' })
+                    .select();
+                if (dbErr) console.error('supabase upsert error', dbErr);
+            } catch (e) {
+                console.error('supabase error', e);
+            }
         }
 
         const from = process.env.SENDGRID_FROM || 'noreply@hevn.example';
