@@ -36,18 +36,22 @@ module.exports = async (req, res) => {
             return;
         }
 
-        const { name, email, role, source } = req.body || {};
+        const body = req.body || {};
+        const name = body.name || body.firstName || null;
+        const { email, role, source } = body;
         if (!email) {
             res.status(400).json({ error: 'Missing email' });
             return;
         }
 
         // persist to Supabase waitlist (if configured)
+        const supabaseTable = process.env.SUPABASE_TABLE_NAME || 'waitlist';
+
         if (supabase) {
             try {
                 const payload = { email: String(email).toLowerCase(), name: name || null, role: role || null, source: source || null };
                 const { data: dbData, error: dbErr } = await supabase
-                    .from('waitlist')
+                    .from(supabaseTable)
                     .upsert([payload], { onConflict: 'email' })
                     .select();
                 if (dbErr) console.error('supabase upsert error', dbErr);

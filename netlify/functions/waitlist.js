@@ -35,17 +35,20 @@ exports.handler = async (event, context) => {
         }
 
         const data = JSON.parse(event.body || '{}');
-        const { name, email, role, source } = data || {};
+        const name = data.name || data.firstName || null;
+        const { email, role, source } = data || {};
         if (!email) {
             return { statusCode: 400, body: JSON.stringify({ error: 'Missing email' }) };
         }
 
         // persist to Supabase waitlist (if configured)
+        const supabaseTable = process.env.SUPABASE_TABLE_NAME || 'waitlist';
+
         if (supabase) {
             try {
                 const payload = { email: String(email).toLowerCase(), name: name || null, role: role || null, source: source || null };
                 const { data: dbData, error: dbErr } = await supabase
-                    .from('waitlist')
+                    .from(supabaseTable)
                     .upsert([payload], { onConflict: 'email' })
                     .select();
                 if (dbErr) console.error('supabase upsert error', dbErr);
