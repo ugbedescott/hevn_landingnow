@@ -16,13 +16,15 @@
     />
     <style>
       :root {
-        --purple: #1877f2;
-        --purple-soft: #cbb9ff;
+        --primary: #0c44be; /* replaces previous purple */
+        --primary-dark: #0a39a1;
+        --primary-soft: rgba(12, 68, 190, 0.12);
         --plum: #10264f;
         --lavender: #d8c7f7;
         --lilac: #f3ebff;
-        --orange: #ff7c2a;
-        --orange-soft: rgba(255, 124, 42, 0.12);
+        --accent-red: #ff1840;
+        --accent-orange: #ff6b35;
+        --accent-orange-soft: rgba(255, 107, 53, 0.12);
         --ivory: #f8f6ff;
         --charcoal: #121826;
         --white: #ffffff;
@@ -118,13 +120,13 @@
       h3 {
         font-weight: 600;
         letter-spacing: -0.02em;
-        line-height: 1.05;
+        line-height: 1.12;
       }
       .display-xl {
         font-size: clamp(34px, 5.5vw, 72px);
         font-weight: 600;
         letter-spacing: -0.03em;
-        line-height: 1.08;
+        line-height: 1.12;
       }
       .display-l {
         font-size: clamp(26px, 3.8vw, 48px);
@@ -136,19 +138,19 @@
         font-size: clamp(22px, 2.4vw, 32px);
         font-weight: 600;
         letter-spacing: -0.02em;
-        line-height: 1.2;
+        line-height: 1.12;
       }
       p.lead {
         font-size: clamp(15px, 1.4vw, 18px);
-        line-height: 1.75;
+        line-height: 1.35;
         font-weight: 340;
-        color: rgba(34, 30, 40, 0.72);
+        color: rgba(34, 30, 40, 0.9);
       }
       p.body-copy {
         font-size: 16px;
-        line-height: 1.65;
+        line-height: 1.45;
         font-weight: 340;
-        color: rgba(34, 30, 40, 0.68);
+        color: rgba(34, 30, 40, 0.9);
       }
 
       ::selection {
@@ -176,6 +178,17 @@
         font-weight: 700;
         letter-spacing: -0.02em;
         color: var(--plum);
+      }
+      .logo img {
+        height: 36px;
+        display: block;
+      }
+
+      .logo-img-device {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        display: block;
       }
       .nav-links {
         display: flex;
@@ -212,23 +225,32 @@
         font-weight: 600;
         padding: 11px 20px;
         border-radius: 3px;
-        transition: all 0.3s var(--ease);
+        transition: all 0.18s var(--ease);
         white-space: nowrap;
+        background: var(--primary);
+        color: var(--white);
+        border: 1px solid transparent;
+      }
+
+      .btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
       }
       .btn-primary {
-        background: var(--purple);
+        background: var(--primary);
         color: var(--white);
       }
       .btn-primary:hover {
-        background: var(--plum);
+        background: var(--primary-dark);
       }
       .btn-ghost {
-        background: rgba(24, 119, 242, 0.08);
-        color: var(--charcoal);
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
       }
       .btn-ghost:hover {
-        background: rgba(24, 119, 242, 0.16);
-        color: var(--purple);
+        background: var(--primary);
+        color: var(--white);
       }
       .btn-arrow {
         transition: transform 0.3s var(--ease);
@@ -361,7 +383,7 @@
         background: linear-gradient(
           160deg,
           rgba(16, 38, 79, 0.85),
-          rgba(24, 74, 161, 0.66) 55%,
+          rgba(12, 68, 190, 0.66) 55%,
           rgba(16, 38, 79, 0.5)
         );
         mix-blend-mode: multiply;
@@ -431,16 +453,16 @@
         background-size: cover;
         background-position: center 30%;
         filter: grayscale(1) contrast(1.1) brightness(0.85);
-        transform: scale(1.04);
-        animation: heroFloat 14s ease-in-out infinite;
+        transform: scale(1.02);
+        animation: heroFloat 18s ease-in-out infinite;
       }
       .hero:hover .hero-bg {
-        transform: scale(1.08);
+        transform: scale(1.03);
       }
       .hero .wrap {
         position: relative;
-        transform: translate3d(calc((var(--hero-x) - 50%) / 10), calc((var(--hero-y) - 50%) / 12), 0);
-        transition: transform 0.22s ease-out;
+        transform: translate3d(calc((var(--hero-x) - 50%) / 30), calc((var(--hero-y) - 50%) / 50), 0);
+        transition: transform 0.28s ease-out;
       }
       .hero h1 {
         margin-bottom: 22px;
@@ -491,10 +513,10 @@
       }
       @keyframes heroFloat {
         0%, 100% {
-          transform: scale(1.04) translateY(0);
+          transform: scale(1.02) translateY(0);
         }
         50% {
-          transform: scale(1.045) translateY(-6px);
+          transform: scale(1.025) translateY(-4px);
         }
       }
       .btn {
@@ -545,6 +567,26 @@
         opacity: 0;
         transform: translateY(10px);
         animation: bubbleIn 0.55s var(--ease) forwards;
+      }
+      .bubble.chat-hidden {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: none !important;
+      }
+      .bubble.typing {
+        position: relative;
+        padding-right: 40px;
+      }
+      .bubble.typing::after {
+        content: "• • •";
+        position: absolute;
+        right: 14px;
+        bottom: 12px;
+        color: currentColor;
+        font-size: 10px;
+        letter-spacing: 4px;
+        opacity: 0.55;
+        animation: typingDots 1.2s infinite;
       }
       .bubble:hover {
         transform: translateY(-2px);
@@ -618,6 +660,17 @@
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @keyframes typingDots {
+        0%, 100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        50% {
+          transform: translateY(-4px);
+          opacity: 1;
         }
       }
 
@@ -1187,9 +1240,13 @@
         transition: all 0.2s;
       }
       .role-pill.sel {
-        background: var(--purple);
-        border-color: var(--purple);
+        background: var(--primary);
+        border-color: var(--primary);
         color: var(--white);
+      }
+      .role-pill:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px -10px rgba(12,68,190,0.24);
       }
       .submit-btn {
         width: 100%;
@@ -1463,12 +1520,49 @@
       .section-photo-bg h2 {
         color: var(--white);
       }
+      /* Force button colors in case of overrides */
+      button.btn, a.btn, .btn {
+        background: var(--primary) !important;
+        color: var(--white) !important;
+        border-color: transparent !important;
+      }
+      button.btn:hover, a.btn:hover, .btn:hover {
+        background: var(--primary-dark) !important;
+        transform: translateY(-1px) !important;
+      }
+      /* Responsive adjustments for tablet and mobile */
+      @media (max-width: 860px) {
+        .logo img { height: 32px; }
+        .wrap { padding: 0 20px; }
+        .hero { padding: 120px 0 80px; }
+        .hero-grid { gap: 40px; }
+        .device { max-width: 520px; margin: 0 auto; }
+        .nav-cta { gap: 12px; }
+        .nav-links a { font-size: 15px; }
+        .role-card { padding: 36px 28px; }
+      }
+
+      @media (max-width: 600px) {
+        .logo img { height: 28px; }
+        .hero { padding: 100px 0 60px; }
+        .display-xl { font-size: clamp(26px, 8.5vw, 36px); }
+        .display-l { font-size: clamp(20px, 6.5vw, 28px); }
+        .btn, .btn-primary { display: block; width: 100%; }
+        .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+        .device { margin-top: 18px; }
+        .device-body { padding: 14px; }
+        .role-card { padding: 26px; }
+        .waitlist-box { padding: 24px; }
+        .role-pills { gap: 6px; }
+        .role-pill { padding: 8px 12px; }
+        .field-two { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
     <header class="nav">
       <div class="wrap nav-inner">
-        <div class="logo">hevn</div>
+        <div class="logo"><img src="LogoNew%20Hevn.png" alt="Hevn logo"></div>
         <nav class="nav-links">
           <a href="#product">Product</a>
           <a href="#how-it-works">How it works</a>
@@ -1500,30 +1594,38 @@
       <div class="hero-bg"></div>
       <div class="wrap hero-grid">
         <div>
-          <h1 class="display-xl">A better place<br />to get things done.</h1>
-          <p class="lead" style="margin-top: 22px; max-width: 480px">
-            Hevn is your AI Secretary for managing commitments, organizing your
-            day, and helping you follow through — right inside the conversations
-            you already use.
+          <h1 class="display-xl">It’s You Against a Million Tasks.</h1>
+          <p class="lead" style="margin-top: 18px; max-width: 560px">
+            You probably forgot a task recently.
+          </p>
+          <p class="lead" style="margin-top: 8px; max-width: 560px">
+            And chances are, you’ll forget another one soon.
+          </p>
+          <p class="lead" style="margin-top: 8px; max-width: 560px">
+            Not because you’re careless. You’re just human.
+          </p>
+          <p class="lead" style="margin-top: 12px; max-width: 560px; font-weight:700">
+            Hevn is the AI secretary that remembers with you.
           </p>
           <div class="hero-cta-row">
-            <a href="#waitlist" class="btn btn-primary"
-              >Join the Waitlist <span class="btn-arrow">→</span></a
-            >
+            <a href="#waitlist" class="btn btn-primary">Join the Waitlist <span class="btn-arrow">→</span></a>
             <a href="#how-it-works" class="link-underline">See how it works</a>
           </div>
         </div>
 
         <div class="device reveal">
           <div class="device-head">
-            <div class="device-mark">H</div>
+            <div class="device-mark"><img class="logo-img-device" src="LogoNew%20Hevn.png" alt="Hevn"></div>
             <div>
               <div class="device-name">Hevn</div>
               <div class="device-sub">AI Secretary · WhatsApp</div>
             </div>
           </div>
           <div class="device-body" id="heroChat">
-            <div class="bubble from-hevn" style="animation-delay: 0.1s">
+            <div class="bubble from-user" style="animation-delay: 0.05s">
+              What do I have on today?
+            </div>
+            <div class="bubble from-hevn" style="animation-delay: 0.15s">
               Good morning. Here's what needs your attention.
             </div>
             <div class="bubble from-hevn" style="animation-delay: 0.5s">
@@ -1547,7 +1649,10 @@
               </div>
               <div class="agenda-tag">4 commitments · 1 high priority</div>
             </div>
-            <div class="bubble from-hevn" style="animation-delay: 0.9s">
+            <div class="bubble from-user" style="animation-delay: 0.95s">
+              Anything urgent?
+            </div>
+            <div class="bubble from-hevn" style="animation-delay: 1.25s">
               You're all set.
             </div>
           </div>
@@ -1622,18 +1727,25 @@
       <div class="roadmap-content">
         <section class="section-border-top" id="messages">
           <div class="wrap center">
-            <p class="eyebrow reveal">Where it lives</p>
-            <h2
-              class="display-l reveal max-text mx-auto"
-              style="margin-top: 16px"
-            >
-              Your day is already happening in messages.
-            </h2>
-            <p class="lead reveal max-text mx-auto" style="margin-top: 20px">
-              Hevn listens to the chat, turns casual plans into commitments, and
-              quietly keeps them moving until they're done.
-            </p>
-          </div>
+              <p class="eyebrow reveal">The problem</p>
+              <h2
+                class="display-l reveal max-text mx-auto"
+                style="margin-top: 16px"
+              >
+                You Have Too Much to Remember.
+              </h2>
+              <p class="lead reveal max-text mx-auto" style="margin-top: 20px">
+                Your meetings. Your deadlines. Your goals. Your promises. The little
+                things you keep telling yourself you'll do later.
+              </p>
+              <p class="lead reveal max-text mx-auto" style="margin-top: 12px">
+                So you make lists. Set reminders. Add calendar events. And somehow,
+                you still forget.
+              </p>
+              <p class="lead reveal max-text mx-auto" style="margin-top: 12px; font-weight:700">
+                You need someone to remember them with you.
+              </p>
+            </div>
           <div class="platform-strip reveal" style="margin-top: 56px">
             <span>WhatsApp</span>
             <span>Telegram</span>
@@ -1644,19 +1756,22 @@
         <section class="section-border-top" id="how-it-works">
           <div class="wrap story-grid">
             <div class="reveal">
-              <p class="eyebrow">The idea</p>
-              <h2 class="display-m" style="margin-top: 14px">
-                You don't need another app.<br />You need someone who remembers.
-              </h2>
-              <p class="body-copy" style="margin-top: 20px">
-                Say what's on your mind, in your own words. Hevn turns it into a
-                commitment it will actually track — and follow up on until it's
-                done.
-              </p>
-            </div>
+                <p class="eyebrow">Meet Hevn</p>
+                <h2 class="display-m" style="margin-top: 14px">
+                  Meet Hevn.
+                </h2>
+                <p class="body-copy" style="margin-top: 20px">
+                  Your AI secretary, right inside your chats. Just tell Hevn what
+                  you need to do. Hevn remembers, keeps track of what's coming,
+                  and reminds you when it matters.
+                </p>
+                <p class="body-copy" style="margin-top: 12px; font-weight:700">
+                  No dashboards. No complicated systems. Just talk.
+                </p>
+              </div>
             <div class="device reveal reveal-delay-1">
               <div class="device-head">
-                <div class="device-mark">H</div>
+                <div class="device-mark"><img class="logo-img-device" src="LogoNew%20Hevn.png" alt="Hevn"></div>
                 <div>
                   <div class="device-name">Hevn</div>
                   <div class="device-sub">AI Secretary · Telegram</div>
@@ -1684,16 +1799,22 @@
         <!-- INTENTION -> COMPLETION -->
         <section class="section-border-top" id="journey">
           <div class="wrap center">
-            <p class="eyebrow reveal">The philosophy</p>
+            <p class="eyebrow reveal">How it works</p>
             <h2
               class="display-l reveal max-text mx-auto"
               style="margin-top: 16px"
             >
-              An idea is easy.<br />Following through is the hard part.
+              Tell Hevn. Hevn remembers. Hevn reminds.
             </h2>
             <p class="lead reveal max-text mx-auto" style="margin-top: 20px">
-              Hevn isn't just a place to store tasks. It stays with a commitment
-              from the moment you make it until the moment it's completed.
+              “Remind me to study Tuesday. I have an exam Thursday.”
+            </p>
+            <p class="lead reveal max-text mx-auto" style="margin-top: 12px">
+              Your plans, deadlines and commitments stay on track. Before the
+              thing becomes the thing you forgot, Hevn nudges you — so you do it.
+            </p>
+            <p class="lead reveal max-text mx-auto" style="margin-top: 12px; font-weight:700">
+              The UI conversation demonstrates the rest.
             </p>
           </div>
           <div class="wrap">
@@ -1751,13 +1872,12 @@
         <!-- ROLE-BASED EXPERIENCE -->
         <section class="section-border-top" id="for-you">
           <div class="wrap center">
-            <p class="eyebrow reveal">For you</p>
+            <p class="eyebrow reveal">Whatever You’re Trying to Keep Up With</p>
             <h2
               class="display-l reveal max-text mx-auto"
               style="margin-top: 16px"
             >
-              Your work isn't like everyone else's.<br />Why should your
-              secretary be?
+              Whatever you’re trying to keep up with.
             </h2>
           </div>
           <div class="wrap">
@@ -1765,26 +1885,32 @@
               <div class="role-card reveal">
                 <div class="role-num">Student</div>
                 <div class="role-title">
-                  Assignments. Exams. Study sessions.
+                  Assignments. Exams. Projects.
                 </div>
                 <p class="role-desc">
-                  Hevn helps you stay ahead of academic life.
+                  Classes, assignments and study plans — Hevn keeps academic
+                  life on track.
                 </p>
               </div>
               <div class="role-card reveal reveal-delay-1">
-                <div class="role-num">Executive Assistant</div>
-                <div class="role-title">Meetings. Follow-ups. Schedules.</div>
-                <p class="role-desc">Hevn helps you keep everything moving.</p>
+                <div class="role-num">Professional</div>
+                <div class="role-title">Meetings. Deadlines. Follow-ups.</div>
+                <p class="role-desc">Hevn helps you stay ahead at work.</p>
               </div>
               <div class="role-card reveal reveal-delay-2">
-                <div class="role-num">Professional</div>
-                <div class="role-title">Projects. Clients. Deadlines.</div>
+                <div class="role-num">Executive</div>
+                <div class="role-title">People. Priorities. Decisions.</div>
                 <p class="role-desc">
-                  Hevn helps you turn responsibilities into progress.
+                  Keep teams and priorities coordinated without extra busywork.
                 </p>
               </div>
+              <div class="role-card reveal reveal-delay-3">
+                <div class="role-num">Life</div>
+                <div class="role-title">Household. Errands. Personal goals.</div>
+                <p class="role-desc">Because sometimes life itself is the task.</p>
+              </div>
             </div>
-            <p class="roles-more reveal">More roles are coming.</p>
+            <p class="roles-more reveal">Three, four, or more — whatever you need.</p>
           </div>
         </section>
 
@@ -1804,7 +1930,7 @@
               </h2>
               <div class="device" style="margin-top: 26px">
                 <div class="device-head">
-                  <div class="device-mark">H</div>
+                  <div class="device-mark"><img class="logo-img-device" src="LogoNew%20Hevn.png" alt="Hevn"></div>
                   <div>
                     <div class="device-name">Hevn</div>
                     <div class="device-sub">AI Secretary</div>
@@ -1840,7 +1966,7 @@
               </h2>
               <div class="device" style="margin-top: 26px">
                 <div class="device-head">
-                  <div class="device-mark">H</div>
+                  <div class="device-mark"><img class="logo-img-device" src="LogoNew%20Hevn.png" alt="Hevn"></div>
                   <div>
                     <div class="device-name">Hevn</div>
                     <div class="device-sub">AI Secretary</div>
@@ -2052,8 +2178,8 @@
     <!-- FINAL CTA -->
     <section class="final">
       <div class="wrap">
-        <h2 class="display-l">Your commitments are waiting.</h2>
-        <div class="display-xl">Hevn is ready.</div>
+        <h2 class="display-l">You Have Enough to Remember.</h2>
+        <div class="display-xl">Let Hevn remember the rest.</div>
 
         <div class="final-count">
           Launching in
@@ -2093,7 +2219,7 @@
       <div class="wrap">
         <div class="footer-panel">
           <div class="footer-brand">
-            <div class="logo" style="margin-bottom: 6px">hevn</div>
+            <div class="logo" style="margin-bottom: 6px"><img src="LogoNew%20Hevn.png" alt="Hevn logo"></div>
             <p>
               Quietly present. Always present. Hevn helps your day stay on track
               without asking you to switch apps.
@@ -2350,25 +2476,40 @@
         });
       }
 
+      function animateChatBubbles(body, initialDelay = 0) {
+        if (!body) return;
+        const bubbles = Array.from(body.querySelectorAll('.bubble'));
+        let index = 0;
+        bubbles.forEach((bubble) => bubble.classList.add('chat-hidden'));
+
+        function showNext() {
+          if (index >= bubbles.length) return;
+          const bubble = bubbles[index];
+          bubble.classList.remove('chat-hidden');
+          bubble.style.animation = 'bubbleIn 0.55s var(--ease) forwards';
+          bubble.classList.add('typing');
+          const contentLength = bubble.textContent.trim().length;
+          const duration = Math.min(900 + contentLength * 8, 2000);
+          setTimeout(() => {
+            bubble.classList.remove('typing');
+            bubble.style.animation = '';
+            index += 1;
+            setTimeout(showNext, 180);
+          }, duration);
+        }
+
+        setTimeout(showNext, initialDelay);
+      }
+
       // ---------- hero chat replay on view ----------
       const heroChat = document.getElementById("heroChat");
       if (heroChat) {
-        const bubbles = heroChat.querySelectorAll(".bubble");
-        const cio = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                bubbles.forEach((b) => {
-                  b.style.animationPlayState = "running";
-                });
-                cio.unobserve(heroChat);
-              }
-            });
-          },
-          { threshold: 0.3 },
-        );
-        cio.observe(heroChat);
+        animateChatBubbles(heroChat, 300);
       }
+
+      document.querySelectorAll('.story-grid .device-body').forEach((body, idx) => {
+        animateChatBubbles(body, 700 + idx * 300);
+      });
 
       const heroSection = document.querySelector(".hero");
       if (heroSection) {
