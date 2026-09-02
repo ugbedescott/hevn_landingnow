@@ -1,13 +1,11 @@
 {
-  "name": "hevn-waitlist",
+  "name": "hevn-landingnow",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "serve . -l $PORT"
-  },
-  "dependencies": {
-    "@sendgrid/mail": "^8.1.6",
-    "@supabase/supabase-js": "^2.30.0",
-    "serve": "^14.2.6"
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "test:waitlist": "npx ts-node backend/scripts/test-waitlist.ts"
   }
 }
