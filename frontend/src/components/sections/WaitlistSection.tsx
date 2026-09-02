@@ -10,6 +10,7 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onSuccess }) =
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [demoMode, setDemoMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,6 +18,10 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onSuccess }) =
 
   const handleRoleClick = (role: string) => {
     setSelectedRole(selectedRole === role ? null : role);
+  };
+
+  const handleSourceClick = (source: string) => {
+    setSelectedSource(selectedSource === source ? null : source);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -34,7 +39,7 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onSuccess }) =
       firstName: firstName.trim(),
       email: email.trim(),
       role: selectedRole,
-      source: typeof window !== 'undefined' ? document.referrer || 'direct' : 'direct',
+      source: selectedSource || (typeof window !== 'undefined' && document.referrer ? 'Web' : 'Direct'),
       timestamp: new Date().toISOString(),
     };
 
@@ -136,6 +141,21 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onSuccess }) =
                         onClick={() => handleRoleClick(role)}
                       >
                         {role}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <label className="field-label">How did you hear about us? (optional)</label>
+                  <div className="role-pills">
+                    {['LinkedIn', 'Twitter / X', 'ProductHunt', 'Referral', 'Search Engine', 'Other'].map((src) => (
+                      <div
+                        key={src}
+                        className={`role-pill ${selectedSource === src ? 'sel' : ''}`}
+                        onClick={() => handleSourceClick(src)}
+                      >
+                        {src}
                       </div>
                     ))}
                   </div>

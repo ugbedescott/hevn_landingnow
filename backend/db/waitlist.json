@@ -1,0 +1,56 @@
+[
+  {
+    "id": "wl_1788375222346_jasf6",
+    "name": "Big Daddy",
+    "email": "jamilabdullahi2005@gmail.com",
+    "role": "Executive Assistant",
+    "source": "ProductHunt",
+    "status": "pending",
+    "createdAt": "2026-09-02T18:53:42.346Z"
+  },
+  {
+    "id": "wl_seed_1",
+    "name": "Sarah Chen",
+    "email": "sarah.chen@techcorp.io",
+    "role": "Executive Assistant",
+    "source": "LinkedIn",
+    "status": "pending",
+    "createdAt": "2026-09-02T16:40:49.768Z"
+  },
+  {
+    "id": "wl_seed_2",
+    "name": "Marcus Vance",
+    "email": "marcus.vance@innovate.co",
+    "role": "Professional",
+    "source": "Twitter / X",
+    "status": "contacted",
+    "createdAt": "2026-09-02T10:40:49.768Z"
+  },
+  {
+    "id": "wl_seed_3",
+    "name": "Elena Rostova",
+    "email": "elena.r@stanford.edu",
+    "role": "Student",
+    "source": "ProductHunt",
+    "status": "pending",
+    "createdAt": "2026-09-02T00:40:49.768Z"
+  },
+  {
+    "id": "wl_seed_4",
+    "name": "David Miller",
+    "email": "d.miller@apexventures.com",
+    "role": "Professional",
+    "source": "Direct Search",
+    "status": "onboarded",
+    "createdAt": "2026-09-01T06:40:49.768Z"
+  },
+  {
+    "id": "wl_seed_5",
+    "name": "Amara Okafor",
+    "email": "amara.okafor@horizon.org",
+    "role": "Executive Assistant",
+    "source": "Referral",
+    "status": "pending",
+    "createdAt": "2026-08-31T18:40:49.768Z"
+  }
+]
